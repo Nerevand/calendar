@@ -1,0 +1,354 @@
+$color1: #ffa931;
+$color2: #fecb89;
+$color3: #b9ac92;
+$color4: #fbe6d4;
+$black: #212121;
+$white: #fff;
+$dark: #191f2b;
+$lightDark: #222a37;
+$lighterGray: #fafafa;
+$lightGray: #fefefe;
+$gray: #e0e0e0;
+
+$cal-light-bd-color: #f3f5f7;
+$selectedBG: linear-gradient(
+  45deg,
+  #fbe6d4 0%,
+  #fecb89 25%,
+  #ffa931 40%,
+  #b9ac92 100%
+);
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.language-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  border-bottom: 2px solid #cdcdcd;
+  span {
+    margin: 10px;
+    cursor: pointer;
+  }
+}
+
+.application {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: $color4;
+  box-sizing: border-box;
+  position: relative;
+  padding: 15px;
+}
+
+.board {
+  display: grid;
+  width: 60%;
+  height: 650px;
+  min-width: 1200px;
+  grid-template-columns: 64px auto 300px;
+  grid-template-rows: auto;
+  font-size: 14px;
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.times {
+  color: #666a6b;
+  background: white;
+  border-right: 1px solid $cal-light-bd-color;
+}
+
+.months {
+  display: grid;
+  height: 100%;
+  grid-template-columns: auto;
+  grid-template-rows: repeat(1fr, 12);
+  color: #666a6b;
+  position: relative;
+  background: white;
+  border-right: 1px solid $cal-light-bd-color;
+}
+
+.month {
+  cursor: pointer;
+  align-self: stretch;
+  justify-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+  position: relative;
+  z-index: 2;
+}
+
+.month.active {
+  color: white;
+}
+
+@for $i from 1 to 13 {
+  .month.active:nth-child(#{$i}) ~ .indicator {
+    transform: translateY(calc(100% * #{$i - 1}));
+  }
+}
+
+.indicator {
+  position: absolute;
+  background: $color1;
+  height: calc(100% / 12);
+  z-index: 1;
+  top: 0;
+  transition: transform 0.3s ease;
+  left: 0;
+  right: -1px;
+}
+.calendar-grid {
+  display: grid;
+  height: 100%;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+}
+
+@for $j from 4 to 7 {
+  .calendar-#{$j}-weeks .calendar-grid {
+    grid-template-rows: repeat(calc(#{$j} + 1), 1fr);
+  }
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  cursor: pointer;
+}
+
+.calendar {
+  display: grid;
+  grid-template-rows: 48px auto;
+  border-top: 1px solid $cal-light-bd-color;
+}
+
+.calendar-date {
+  align-self: stretch;
+  justify-self: stretch;
+  border-bottom: 1px solid $cal-light-bd-color;
+  border-right: 1px solid $cal-light-bd-color;
+  padding: 8px;
+  cursor: pointer;
+  background: white;
+  color: #dbdbe9;
+  position: relative;
+}
+
+.highlight::after {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  right: -1px;
+  bottom: -1px;
+  border: 4px solid;
+  border-image: $selectedBG;
+  border-image-slice: 1;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.calendar-date.in-month {
+  color: #666a6b;
+}
+
+.calendar-date.is-today::before {
+  content: "";
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  background: #4090ff;
+  border-radius: 50%;
+  height: 8px;
+  width: 8px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.calendar-day {
+  background: #fafafa;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #adb1b4;
+  font-weight: bold;
+  position: relative;
+}
+
+.detail {
+  padding: 0 16px;
+  background: white;
+}
+.date-string {
+  font-size: 20px;
+  color: #666a6b;
+}
+
+.remaind {
+  color: #a3a4a8;
+}
+
+.task-detail-block {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  .remove-task {
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
+//week
+
+.calendar-week-grid {
+  position: relative;
+}
+
+.daily-time {
+  width: 100%;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #666a6b;
+  position: relative;
+  background: white;
+  border-right: 1px solid $cal-light-bd-color;
+  border: 1px solid $cal-light-bd-color;
+  box-sizing: border-box;
+}
+
+.time-zone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25px;
+  box-sizing: border-box;
+  border: 1px solid $cal-light-bd-color;
+  user-select: none;
+}
+
+.daily-task {
+  position: absolute;
+  background-color: rgb(121, 134, 203);
+  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  min-height: 25px;
+  border-radius: 5px;
+  z-index: 5;
+  cursor: pointer;
+  user-select: none;
+  &:hover {
+    z-index: 6;
+    .remove-daily-task {
+      display: flex;
+    }
+  }
+  .remove-daily-task {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    transform: translate(50%, -50%);
+    background-color: rgb(255, 255, 255);
+    border: 2px solid black;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 16;
+  }
+}
+.weekly-btn-wrapper {
+  margin: 20px 0;
+  .week-changer {
+    padding: 5px;
+    box-sizing: border-box;
+    display: inline-flex;
+    cursor: pointer;
+    margin-right: 15px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .today {
+    background-color: transparent;
+    border: 1px solid #dadce0;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 36px;
+  }
+
+  .arrows {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgba(95, 158, 160, 0.164);
+    user-select: none;
+    &:hover {
+      background-color: cadetblue;
+    }
+  }
+}
+
+.today-cls {
+  border-bottom: 2px solid black;
+}
+
+.language {
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+  padding: 5px;
+  cursor: pointer;
+}
+.active-language {
+  background-color: #1a73e8;
+  color: #fff;
+}
+
+@media screen and (max-width: 1200px) {
+  .application {
+    box-sizing: border-box;
+  }
+
+  .board {
+    width: 100%;
+    min-width: 320px;
+  }
+
+  .calendar {
+    width: 100%;
+  }
+
+  .calendar-date {
+    min-width: 50px;
+  }
+
+  .detail {
+    width: 150px;
+  }
+}

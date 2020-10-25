@@ -1,0 +1,36 @@
+{
+  "text": "Aplication",
+  "period": "Period",
+  "today": "Today",
+  "eMode": "event mode",
+  "daysToNR": "days to the end of ",
+  "selectedTaskTitle": "Tasks on selected date",
+  "days": {
+    "Sun": "Sun",
+    "Mon": "Mon",
+    "Tue": "Tue",
+    "Wed": "Wed",
+    "Thu": "Thu",
+    "Fri": "Fri",
+    "Sat": "Sat"
+  },
+  "month": {
+    "Jan": "Jan.",
+    "Feb": "Feb.",
+    "Mar": "Mar.",
+    "Apr": "Apr.",
+    "May": "May.",
+    "Jun": "Jun",
+    "Jul": "Jul.",
+    "Aug": "Aug.",
+    "Sep": "Sep.",
+    "Oct": "Oct.",
+    "Nov": "Nov.",
+    "Dec": "Dec."
+  },
+  "select": {
+    "month": "Month",
+    "week": "Week"
+  },
+  "taskHere": "Task here"
+}
