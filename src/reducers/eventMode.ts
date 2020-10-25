@@ -1,7 +1,11 @@
-function eventMode(
-  state = false,
-  { type, payload }: any
-): string | boolean {
+type ActionProps = {
+  type: string;
+  payload: boolean;
+};
+
+function eventMode(state = false, action: ActionProps): boolean {
+  const { type, payload } = action;
+
   if (type === "CHANGE_EVENT_STATUS") {
     return payload;
   }

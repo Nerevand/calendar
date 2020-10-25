@@ -1,5 +1,5 @@
 import React from "react";
-import classnames from "clsx";
+import clsx from "clsx";
 import { withTranslation } from "react-i18next";
 
 import { connect } from "react-redux";
@@ -198,7 +198,7 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
     } = this.props;
     const { selectedDate } = this.state;
     const { date, inMonth } = dateObj;
-    const cls = classnames("calendar-date", {
+    const cls = clsx("calendar-date", {
       "in-month": inMonth,
       highlight: inMonth && isSameDay(date, new Date(selectedDate)),
     });
@@ -258,7 +258,7 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
       dates[0].date
     );
 
-    const cls = classnames("calendar", `calendar-${weeks}-weeks`);
+    const cls = clsx("calendar", `calendar-${weeks}-weeks`);
 
     return (
       <article className={cls}>

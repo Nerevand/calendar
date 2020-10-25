@@ -1,32 +1,29 @@
-import React from 'react'
-import classnames from 'clsx'
+import React from "react";
+import clsx from "clsx";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import { changeSelectedMonth } from 'actions'
-import { State } from 'typedefs'
-import { MONTHS_CON } from 'invariants'
-
+import { changeSelectedMonth } from "actions";
+import { State } from "typedefs";
+import { MONTHS_CON } from "invariants";
 
 function Months() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const selectedMonth = useSelector((state: State) => state.period.selectedMonth)
+  const selectedMonth = useSelector(
+    (state: State) => state.period.selectedMonth
+  );
   const changeMonth = (month: number) => {
-    dispatch(changeSelectedMonth(month))
-  }
+    dispatch(changeSelectedMonth(month));
+  };
 
   const renderItem = (item: string, month: number) => {
-    const cls = classnames("month", {
-      active: month === selectedMonth
+    const cls = clsx("month", {
+      active: month === selectedMonth,
     });
 
     return (
-      <div
-        className={cls}
-        key={month}
-        onClick={() => changeMonth(month)}
-      >
+      <div className={cls} key={month} onClick={() => changeMonth(month)}>
         {t(`month.${item}`)}
       </div>
     );
@@ -40,4 +37,4 @@ function Months() {
   );
 }
 
-export default Months
+export default Months;
