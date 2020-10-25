@@ -23,9 +23,9 @@ function Months() {
     });
 
     return (
-      <div className={cls} key={month} onClick={() => changeMonth(month)}>
+      <article className={cls} key={month} onClick={() => changeMonth(month)}>
         {t(`month.${item}`)}
-      </div>
+      </article>
     );
   };
 

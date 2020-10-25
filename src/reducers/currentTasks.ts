@@ -1,4 +1,5 @@
 import { Task } from "typedefs";
+import { FETCH_USER_TASKS } from "actions";
 
 type ActionProps = {
   type: string;
@@ -7,7 +8,7 @@ type ActionProps = {
 
 function fetchCurrentTasksReducer(state = [], action: ActionProps): Task[] {
   const { type, payload } = action;
-  if (type === "FETCH_USER_TASKS") {
+  if (type === FETCH_USER_TASKS) {
     return payload;
   }
   return state;

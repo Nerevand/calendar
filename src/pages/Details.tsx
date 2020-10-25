@@ -122,17 +122,17 @@ function Detail(props: DetailProps) {
 
       <input type="checkbox" onChange={handleEventStatus} />
       <label>{t("eMode")}</label>
-      <div>
+      <article>
         <h3 className="date-string">{format(selectedDate, "MMM，Do")}</h3>
         <p className="remaind">
           {remaind} {t("daysToNR")} {year}
         </p>
-      </div>
+      </article>
       <br />
 
-      <section>
+      <aside>
         <h3> {t("selectedTaskTitle")}</h3>
-        <div style={{ overflowY: "auto", height: "200px" }}>
+        <article style={{ overflowY: "auto", height: "200px" }}>
           {tasks.map((i: Task, index: number) => (
             <div key={i.id} className="task-detail-block">
               <span>
@@ -146,8 +146,8 @@ function Detail(props: DetailProps) {
               </span>
             </div>
           ))}
-        </div>
-      </section>
+        </article>
+      </aside>
     </section>
   );
 }

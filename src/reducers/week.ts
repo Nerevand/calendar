@@ -1,27 +1,23 @@
-import {
-  endOfWeek,
-  startOfWeek,
-} from 'date-fns'
+import { endOfWeek, startOfWeek } from "date-fns";
+
+import { SET_WEEK } from "actions";
 
 type ActionProps = {
-  type: string
+  type: string;
   payload: {
-    start: Date
-    end: Date
-  }
-}
+    start: Date;
+    end: Date;
+  };
+};
 
 const initialState = {
   start: startOfWeek(new Date()),
-  end: endOfWeek(new Date())
-}
+  end: endOfWeek(new Date()),
+};
 
-function setWeekReducer(
-  state = initialState,
-  action: ActionProps
-) {
-  const { type, payload } = action
-  if (type === "SET_WEEK") {
+function setWeekReducer(state = initialState, action: ActionProps) {
+  const { type, payload } = action;
+  if (type === SET_WEEK) {
     return payload;
   }
   return state;

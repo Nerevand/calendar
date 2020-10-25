@@ -1,3 +1,5 @@
+import { CHANGE_MONTH, CHANGE_DATE, CHANGE_TYPE } from "actions";
+
 type ActionProps = {
   type: string;
   payload: {
@@ -17,12 +19,12 @@ const selectedDate = (state = initialState, action: ActionProps) => {
   const { type, payload } = action;
 
   switch (type) {
-    case "CHANGE_MONTH":
+    case CHANGE_MONTH:
       return {
         ...state,
         selectedMonth: payload.selectedMonth,
       };
-    case "CHANGE_DATE":
+    case CHANGE_DATE:
       const month = new Date(payload.selectedDate).getMonth();
 
       return {
@@ -30,7 +32,7 @@ const selectedDate = (state = initialState, action: ActionProps) => {
         selectedMonth: month,
         selectedDate: payload.selectedDate,
       };
-    case "CHANGE_TYPE":
+    case CHANGE_TYPE:
       return {
         ...state,
         type: payload.type,
