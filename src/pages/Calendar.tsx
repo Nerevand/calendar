@@ -1,6 +1,5 @@
-import React from 'react'
-import classnames from 'clsx'
-// import * as R from 'ramda'
+import React from "react";
+import classnames from "clsx";
 import { withTranslation } from "react-i18next";
 
 import { connect } from "react-redux";
@@ -16,39 +15,33 @@ import {
   isSameDay,
   parseISO,
   getTime,
-} from 'date-fns';
+} from "date-fns";
 
-import {
-  changeSelectedDate,
-  fetchCurrentTasks,
-  fetchAllTasks
-} from 'actions'
+import { changeSelectedDate, fetchCurrentTasks, fetchAllTasks } from "actions";
 
-import { initialList, DAYS } from 'invariants'
-import { Task, State } from 'typedefs'
-
-
+import { initialList, DAYS } from "invariants";
+import { Task, State } from "typedefs";
 
 type CalendarProps = {
-  changeSelectedDate: any,
-  fetchCurrentTasks: any,
-  fetchAllTasks: any
-  eventMode: boolean,
-  taskList: Task[],
-  t?: Function
-}
+  changeSelectedDate: any;
+  fetchCurrentTasks: any;
+  fetchAllTasks: any;
+  eventMode: boolean;
+  taskList: Task[];
+  t?: Function;
+};
 
 type CalendarState = {
-  year: any,
-  month: any,
-  selectedDate: any,
-  dates: any[],
-  selectedDates: any
-}
+  year: any;
+  month: any;
+  selectedDate: any;
+  dates: any[];
+  selectedDates: any;
+};
 
 class Calendar extends React.Component<CalendarProps, CalendarState> {
   static defaultProps = {
-    changeSelectedDate: () => null
+    changeSelectedDate: () => null,
   };
   constructor(props: CalendarProps) {
     super(props);
@@ -59,16 +52,16 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
       dates: [],
       selectedDates: {
         start: null,
-        end: null
+        end: null,
       },
     };
   }
 
   componentDidMount() {
-    const dataFromStorage: string | null = localStorage.getItem('data')
-    const parsedData = JSON.parse(dataFromStorage as string)
+    const dataFromStorage: string | null = localStorage.getItem("data");
+    const parsedData = JSON.parse(dataFromStorage as string);
 
-    this.props.fetchAllTasks(parsedData ?? initialList)
+    this.props.fetchAllTasks(parsedData ?? initialList);
   }
 
   static makeMonthDates = (props: any) => {
@@ -85,9 +78,10 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
       preDates.push({
         inMonth: false,
         date: new Date(
-          `${preMonthLastDate.getFullYear()}-${preMonthLastDate.getMonth() + 1
+          `${preMonthLastDate.getFullYear()}-${
+            preMonthLastDate.getMonth() + 1
           }-${preMonthLastDate.getDate() - preMonthDayOffset}`
-        )
+        ),
       });
       preMonthDayOffset--;
     }
@@ -100,7 +94,7 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
     for (let day = 1; day < totalDaysInCurrentMonth + 1; day++) {
       dates.push({
         inMonth: true,
-        date: new Date(`${year}-${month + 1}-${day}`)
+        date: new Date(`${year}-${month + 1}-${day}`),
       });
     }
 
@@ -111,9 +105,10 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
       nextDates.push({
         inMonth: false,
         date: new Date(
-          `${nextMonthFirstDate.getFullYear()}-${nextMonthFirstDate.getMonth() + 1
+          `${nextMonthFirstDate.getFullYear()}-${
+            nextMonthFirstDate.getMonth() + 1
           }-${nextMonthFirstDate.getDate() + i}`
-        )
+        ),
       });
     }
 
@@ -130,77 +125,87 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
         year: nextProps.year,
         month: nextProps.month,
         selectedDate: nextProps.selectedDate,
-        dates: Calendar.makeMonthDates(nextProps)
+        dates: Calendar.makeMonthDates(nextProps),
       };
     }
     return null;
   }
 
   handleSetAction = () => {
-    const { selectedDates } = this.state
-    let { start, end } = selectedDates
+    const { selectedDates } = this.state;
+    let { start, end } = selectedDates;
 
     if (start && end) {
-      const { taskList, fetchAllTasks } = this.props
-      const message = prompt('task', '')
-      const newTask: Task[] = []
-      const id = getTime(new Date())
+      const { taskList, fetchAllTasks } = this.props;
+      const message = prompt("task", "");
+      const newTask: Task[] = [];
+      const id = getTime(new Date());
 
       if (!message) {
-        return
+        return;
       }
 
       if (start > end) {
-        let temporary = start
-        start = end
-        end = temporary
-        temporary = null
+        let temporary = start;
+        start = end;
+        end = temporary;
+        temporary = null;
       }
 
       while (start <= end) {
         newTask.push({
           start: format(start, `yyyy-MM-dd'T'HH:mm:ss.SSSxxx`),
           message,
-          id
-        })
-        start = add(start, { days: 1 })
+          id,
+        });
+        start = add(start, { days: 1 });
       }
 
-      fetchAllTasks([...taskList, ...newTask])
+      fetchAllTasks([...taskList, ...newTask]);
     }
-  }
+  };
 
   handleSetDates = (d: Date) => {
-    const { selectedDates } = this.state
+    const { selectedDates } = this.state;
 
-    this.setState({
-      selectedDates: {
-        start: selectedDates.start ?? d,
-        end: selectedDates.start ? d : selectedDates.end
-      }
-    }, this.handleSetAction)
+    this.setState(
+      {
+        selectedDates: {
+          start: selectedDates.start ?? d,
+          end: selectedDates.start ? d : selectedDates.end,
+        },
+      },
+      this.handleSetAction
+    );
 
     if (selectedDates.end) {
       this.setState({
         selectedDates: {
           start: d,
-          end: null
-        }
-      })
+          end: null,
+        },
+      });
     }
-  }
+  };
 
   renderDate(dateObj: any, ind: number) {
-    const { t }: any = this.props
-    const { changeSelectedDate, eventMode, fetchCurrentTasks, taskList } = this.props;
+    const { t }: any = this.props;
+    const {
+      changeSelectedDate,
+      eventMode,
+      fetchCurrentTasks,
+      taskList,
+    } = this.props;
     const { selectedDate } = this.state;
     const { date, inMonth } = dateObj;
     const cls = classnames("calendar-date", {
       "in-month": inMonth,
-      highlight: inMonth && isSameDay(date, new Date(selectedDate))
+      highlight: inMonth && isSameDay(date, new Date(selectedDate)),
     });
 
-    const currentTasks = taskList.filter((item: Task) => isSameDay(date, parseISO(item.start)))
+    const currentTasks = taskList.filter((item: Task) =>
+      isSameDay(date, parseISO(item.start))
+    );
 
     return (
       <div
@@ -208,11 +213,11 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
         key={ind}
         onClick={() => {
           if (eventMode) {
-            this.handleSetDates(date)
+            this.handleSetDates(date);
           } else {
-            fetchCurrentTasks(currentTasks)
+            fetchCurrentTasks(currentTasks);
           }
-          changeSelectedDate(date)
+          changeSelectedDate(date);
         }}
       >
         {format(date, "dd")} <br />
@@ -229,8 +234,8 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
     );
   }
   renderDays() {
-    const { t }: any = this.props
-    const updatedDAys = DAYS.map(d => `${t(`days.${d}`)}`)
+    const { t }: any = this.props;
+    const updatedDAys = DAYS.map((d) => `${t(`days.${d}`)}`);
     return (
       <header className="calendar-days">
         {updatedDAys.map((day) => this.renderDay(day))}
@@ -279,15 +284,14 @@ const ConnectedCalendar = connect(
       dispatch(changeSelectedDate(date));
     },
     fetchCurrentTasks: (tasks: Task[]) => {
-      dispatch(fetchCurrentTasks(tasks))
+      dispatch(fetchCurrentTasks(tasks));
     },
     fetchAllTasks: (tasks: Task[]) => {
-      dispatch(fetchAllTasks(tasks))
+      dispatch(fetchAllTasks(tasks));
     },
-
   })
 )(Calendar);
 
 const CalendarTranslated = withTranslation()(ConnectedCalendar);
 
-export default CalendarTranslated
+export default CalendarTranslated;
