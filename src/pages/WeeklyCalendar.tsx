@@ -119,6 +119,7 @@ const WeeklyCalendar: React.FC<CalendarProps> = (props) => {
         <div
           className="remove-daily-task"
           onClick={() => handleRemoveTask(d.id)}
+          aria-label="Remove task"
         >
           X
         </div>

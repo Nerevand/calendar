@@ -22,7 +22,9 @@ import {
   setWeek,
   fetchCurrentTasks,
 } from "actions";
+
 import Select from "components/ui/Select";
+import Checkbox from "components/ui/Checkbox";
 import { Languages, periods } from "invariants";
 import { Task, State } from "typedefs";
 
@@ -38,8 +40,11 @@ type DetailProps = {
 function Detail(props: DetailProps) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
   const { selectedDate, tasks, selectedPeriod, language } = props;
+
   const [period, setPeriod] = useState<string>(selectedPeriod);
+  const [checked, setChecked] = useState<boolean>(false);
 
   const handleChange = (event: React.ChangeEvent<any>) => {
     setPeriod(event.target.value);
@@ -56,6 +61,7 @@ function Detail(props: DetailProps) {
 
   const handleEventStatus = (e: React.ChangeEvent<any>) => {
     dispatch(changeEventStatus(e.target.checked));
+    setChecked(e.target.checked);
   };
 
   const handleRemoveTasks = (id: number | string) => {
@@ -120,8 +126,13 @@ function Detail(props: DetailProps) {
 
       <Select data={periods} value={period} handleChange={handleChange} />
 
-      <input type="checkbox" onChange={handleEventStatus} />
+      <Checkbox
+        checked={checked}
+        onChange={handleEventStatus}
+        color="primary"
+      />
       <label>{t("eMode")}</label>
+
       <article>
         <h3 className="date-string">{format(selectedDate, "MMM，Do")}</h3>
         <p className="remaind">
